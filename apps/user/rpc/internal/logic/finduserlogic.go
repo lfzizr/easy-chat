@@ -25,6 +25,6 @@ func NewFindUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FindUser
 
 func (l *FindUserLogic) FindUser(in *user.FindUserReq) (*user.FindUserResp, error) {
 	// todo: add your logic here and delete this line
-
+	
 	return &user.FindUserResp{}, nil
 }
