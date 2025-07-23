@@ -5,7 +5,7 @@ SERVER_TYPE=rpc
 
 # 测试环境配置
 # docker的镜像发布地址
-DOCKER_REPO_TEST=registry.cn-hangzhou.aliyuncs.com/easy-chat/${SERVER_NAME}-${SERVER_TYPE}-dev
+DOCKER_REPO_TEST=crpi-34w6byhqmscywvlv.cn-shenzhen.personal.cr.aliyuncs.com/easy-chat111/${SERVER_NAME}-${SERVER_TYPE}-dev
 # 测试版本
 VERSION_TEST=$(VERSION)
 # 编译的程序名称
