@@ -31,6 +31,8 @@ type (
 		Insert(ctx context.Context, data *Users) (sql.Result, error)
 		FindOne(ctx context.Context, id string) (*Users, error)
 		FindByPhone(ctx context.Context, phone string) (*Users, error)
+		ListByName(ctx context.Context, name string) ([]*Users, error)
+		ListByIds(ctx context.Context, ids []string) ([]*Users, error)
 		Update(ctx context.Context, data *Users) error
 		Delete(ctx context.Context, id string) error
 	}
@@ -97,6 +99,34 @@ func (m *defaultUsersModel) FindByPhone(ctx context.Context, phone string) (*Use
 		return &resp, nil
 	case sqlc.ErrNotFound:
 		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+// ListByName 根据昵称查询用户列表(同名用户)，模糊查询应该给name添加%
+func (m *defaultUsersModel) ListByName(ctx context.Context, name string) ([]*Users, error) {
+	var resp []*Users
+	query := fmt.Sprintf("select %s from %s where `nickname` like ?", usersRows, m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, "%"+name+"%")
+	switch err {
+	case nil:
+		return resp, nil
+	case sql.ErrNoRows:
+		return []*Users{}, nil
+	default:
+		return nil, err
+	}
+}
+func (m *defaultUsersModel) ListByIds(ctx context.Context, ids []string) ([]*Users, error) {
+	var resp []*Users
+	query := fmt.Sprintf("select %s from %s where `id` in ('%s')", usersRows, m.table, strings.Join(ids, ","))
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query)
+	fmt.Printf("id: %v",resp[0].Id)
+	switch err {
+	case nil:
+		return resp, nil
+	case sql.ErrNoRows:
+		return []*Users{}, nil
 	default:
 		return nil, err
 	}

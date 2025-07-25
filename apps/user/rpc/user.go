@@ -8,6 +8,7 @@ import (
 	"gitee.com/lfzizr/easy-chat/apps/user/rpc/internal/server"
 	"gitee.com/lfzizr/easy-chat/apps/user/rpc/internal/svc"
 	"gitee.com/lfzizr/easy-chat/apps/user/rpc/user"
+	"gitee.com/lfzizr/easy-chat/pkg/interceptor/rpcserver"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -33,7 +34,7 @@ func main() {
 		}
 	})
 	defer s.Stop()
-
+	s.AddUnaryInterceptors(rpcserver.LogInterceptor)
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
 }

@@ -13,8 +13,8 @@ type Config struct {
 	Cache cache.CacheConf
 
 	Jwt   struct {
-		Secret string
-		Expire int64
+		AccessSecret string
+		AccessExpire int64
 	}
 
 }

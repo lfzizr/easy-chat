@@ -75,12 +75,12 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 	}
 	// 3. 生成并返回token
 	now := time.Now().Unix()
-	token,err := ctxdata.GetJwtToken(l.svcCtx.Config.Jwt.Secret,now,l.svcCtx.Config.Jwt.Expire,userEntity.Id)
+	token,err := ctxdata.GetJwtToken(l.svcCtx.Config.Jwt.AccessSecret,now,l.svcCtx.Config.Jwt.AccessExpire,userEntity.Id)
 	if err != nil {
 		return nil,err
 	}
 	return &user.RegisterResp{
 		Token: token,
-		Expire: now + l.svcCtx.Config.Jwt.Expire,
+		Expire: now + l.svcCtx.Config.Jwt.AccessExpire,
 	}, nil
 }

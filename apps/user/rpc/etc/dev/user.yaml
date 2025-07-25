@@ -11,5 +11,5 @@ Cache:
     Type: node
     Pass: easy-chat
 Jwt:
-  Secret: easy-chat
-  Expire: 864000
+  AccessSecret: easy-chat
+  AccessExpire: 864000
